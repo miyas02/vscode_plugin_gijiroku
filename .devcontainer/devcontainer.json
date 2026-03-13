@@ -3,7 +3,19 @@
 {
 	"name": "Node.js & TypeScript",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:4-24-bookworm"
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:4-24-bookworm",
+	"postCreateCommand": "npm install -g @anthropic-ai/claude-code",
+	// "mounts": [
+    //     "source=${localEnv:HOME}/.claude-code,target=/home/node/.claude-code,type=bind"
+    // ],
+	"customizations": {
+        "vscode": {
+            "extensions": [
+                "anthropic.claude-dev" // 任意：VS Code拡張機能もセットで
+            ]
+        }
+    },
+	"remoteUser": "node"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
