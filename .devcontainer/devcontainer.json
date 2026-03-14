@@ -1,34 +1,20 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "Node.js & TypeScript",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:4-24-bookworm",
-	"postCreateCommand": "npm install -g @anthropic-ai/claude-code",
-	// "mounts": [
-    //     "source=${localEnv:HOME}/.claude-code,target=/home/node/.claude-code,type=bind"
-    // ],
-	"customizations": {
+    "name": "Node.js & TypeScript",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:4-24-bookworm",
+    "mounts": [
+        "source=${localEnv:USERPROFILE}/.claude,target=/home/node/.claude,type=bind",
+        "source=${localEnv:USERPROFILE}/.claude.json,target=/home/node/.claude.json,type=bind"
+    ],
+    "remoteEnv": {
+        "CLAUDE_CODE_OAUTH_TOKEN": "${localEnv:CLAUDE_CODE_OAUTH_TOKEN}"
+    },
+    "postCreateCommand": "npm install -g @anthropic-ai/claude-code",
+    "customizations": {
         "vscode": {
             "extensions": [
-                "anthropic.claude-dev" // 任意：VS Code拡張機能もセットで
+                "anthropic.claude-dev"
             ]
         }
     },
-	"remoteUser": "node"
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+    "remoteUser": "node"
 }
