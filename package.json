@@ -1,6 +1,6 @@
 {
-  "name": "plugin-2",
-  "displayName": "plugin_2",
+  "name": "custom_gijiroku",
+  "displayName": "custom_gijiroku",
   "description": "---",
   "version": "0.0.1",
   "engines": {
@@ -12,6 +12,26 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "custom_gijiroku",
+      "properties": {                                                                                                     
+        "custom_gijiroku.enable": {
+          "type": "boolean",                                                                                              
+          "default": true,
+          "description": "機能を有効にする"
+        },
+        "custom_gijiroku.targetText": {
+          "type": "string",                                                                                              
+          "default": "★",
+          "description": "置換対象文字列"
+        },
+        "custom_gijiroku.replaceChar": {
+          "type": "string",                                                                                               
+          "default": "★",
+          "description": "置換文字"                                                                                       
+        }                                                                                                                 
+      }                                                                                                                   
+    },
     "markdown.markdownItPlugins": true,
     "markdown.previewScripts": [
       "./main.js"
