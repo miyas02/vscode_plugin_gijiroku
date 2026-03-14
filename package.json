@@ -2,7 +2,7 @@
   "name": "custom-gijiroku",
   "displayName": "custom_gijiroku",
   "description": "---",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "custom-gijiroku",
   "engines": {
     "vscode": "^1.109.0"
@@ -42,9 +42,6 @@
       }                                                                                                                   
     },
     "markdown.markdownItPlugins": true,
-    "markdown.previewScripts": [
-      "./main.js"
-    ],
     "commands": [
       {
         "command": "plugin-2.helloWorld",
