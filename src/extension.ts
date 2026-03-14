@@ -10,14 +10,16 @@ export function activate(context: vscode.ExtensionContext) {
     //vscode統合設定読み込み
     const config = vscode.workspace.getConfiguration('custom_gijiroku');
     const enable = config.get<boolean>('enable');
-    const targetText = config.get<string>('targetText');
-    const replaceChar = config.get<string>('replaceChar');
-    let targetRegex: RegExp | null = null;
-    try {
-        targetRegex = new RegExp(targetText || '', 'gm');
-    } catch (e) {
-        vscode.window.showErrorMessage(`custom_gijiroku: targetText の正規表現が無効です: ${targetText}`);
-    }
+    type Replacement = { targetText: string; replaceChar: string };
+    const replacements = config.get<Replacement[]>('replacements') || [];
+    const rules = replacements.flatMap((r) => {
+        try {
+            return [{ regex: new RegExp(r.targetText, 'gm'), replaceChar: r.replaceChar }];
+        } catch (e) {
+            vscode.window.showErrorMessage(`custom_gijiroku: 正規表現が無効です: ${r.targetText}`);
+            return [];
+        }
+    });
 
     return {
         extendMarkdownIt(md: any) {
@@ -25,9 +27,10 @@ export function activate(context: vscode.ExtensionContext) {
             md.core.ruler.after('block', 'my_custom_replace', (state: any) => {
                 state.tokens.forEach((token: any) => {
                     if (token.type !== 'fence' || token.info.trim() !== 'giji') {return;}
-                    if (!targetRegex) {return;}
-                    targetRegex.lastIndex = 0;
-                    token.content = token.content.replace(targetRegex, replaceChar || '');
+                    for (const rule of rules) {
+                        rule.regex.lastIndex = 0;
+                        token.content = token.content.replace(rule.regex, rule.replaceChar);
+                    }
                 });
             });
 

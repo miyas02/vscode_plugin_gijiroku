@@ -17,19 +17,27 @@
       "title": "custom_gijiroku",
       "properties": {                                                                                                     
         "custom_gijiroku.enable": {
-          "type": "boolean",                                                                                              
+          "type": "boolean",
           "default": true,
           "description": "機能を有効にする"
         },
-        "custom_gijiroku.targetText": {
-          "type": "string",                                                                                              
-          "default": "★",
-          "description": "置換対象文字列"
-        },
-        "custom_gijiroku.replaceChar": {
-          "type": "string",                                                                                               
-          "default": "★",
-          "description": "置換文字"                                                                                       
+        "custom_gijiroku.replacements": {
+          "type": "array",
+          "default": [{ "targetText": "star", "replaceChar": "★" }],
+          "description": "置換ルールの一覧",
+          "items": {
+            "type": "object",
+            "properties": {
+              "targetText": {
+                "type": "string",
+                "description": "置換対象（正規表現）"
+              },
+              "replaceChar": {
+                "type": "string",
+                "description": "置換後の文字列"
+              }
+            }
+          }
         }                                                                                                                 
       }                                                                                                                   
     },
