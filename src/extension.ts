@@ -12,7 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
     const enable = config.get<boolean>('enable');
     const targetText = config.get<string>('targetText');
     const replaceChar = config.get<string>('replaceChar');
-    const targetRegex = new RegExp(targetText || '', 'g');
+    const targetRegex = new RegExp(targetText || '', 'gm');
+
     return {
         extendMarkdownIt(md: any) {
             // 自作の置換ルールを定義
@@ -20,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
                 state.tokens.forEach((token: any) => {
                     if (token.type !== 'fence' || token.info.trim() !== 'giji') {return;}
                     targetRegex.lastIndex = 0;
-                    token.content = token.content.replace(targetRegex, replaceChar);
+                    token.content = token.content.replace(targetRegex, replaceChar || '');
                 });
             });
 
