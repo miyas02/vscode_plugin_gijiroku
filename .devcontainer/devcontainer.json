@@ -8,7 +8,7 @@
     "remoteEnv": {
         "CLAUDE_CODE_OAUTH_TOKEN": "${localEnv:CLAUDE_CODE_OAUTH_TOKEN}"
     },
-    "postCreateCommand": "npm install -g @anthropic-ai/claude-code",
+    "postCreateCommand": "npm install -g @anthropic-ai/claude-code @linear/sdk && claude mcp add --transport stdio linear -- npx -y @modelcontextprotocol/server-linear",
     "customizations": {
         "vscode": {
             "extensions": [
