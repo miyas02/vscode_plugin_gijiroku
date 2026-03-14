@@ -12,7 +12,12 @@ export function activate(context: vscode.ExtensionContext) {
     const enable = config.get<boolean>('enable');
     const targetText = config.get<string>('targetText');
     const replaceChar = config.get<string>('replaceChar');
-    const targetRegex = new RegExp(targetText || '', 'gm');
+    let targetRegex: RegExp | null = null;
+    try {
+        targetRegex = new RegExp(targetText || '', 'gm');
+    } catch (e) {
+        vscode.window.showErrorMessage(`custom_gijiroku: targetText の正規表現が無効です: ${targetText}`);
+    }
 
     return {
         extendMarkdownIt(md: any) {
@@ -20,6 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
             md.core.ruler.after('block', 'my_custom_replace', (state: any) => {
                 state.tokens.forEach((token: any) => {
                     if (token.type !== 'fence' || token.info.trim() !== 'giji') {return;}
+                    if (!targetRegex) {return;}
                     targetRegex.lastIndex = 0;
                     token.content = token.content.replace(targetRegex, replaceChar || '');
                 });

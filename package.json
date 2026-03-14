@@ -1,8 +1,9 @@
 {
-  "name": "custom_gijiroku",
+  "name": "custom-gijiroku",
   "displayName": "custom_gijiroku",
   "description": "---",
   "version": "0.0.1",
+  "publisher": "custom-gijiroku",
   "engines": {
     "vscode": "^1.109.0"
   },
